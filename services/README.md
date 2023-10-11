@@ -111,5 +111,5 @@ This was created for the load balancer exercise but we used external resource th
   ```
 - To get into a particular deployment terminal
   ```sh
-    kubectl exec -it <deployment-name> /bin/bash
+    kubectl exec -it <deployment-name> -- /bin/bash
   ```

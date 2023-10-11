@@ -67,7 +67,7 @@ This repo consist most of the examples of services and deployments demo in Kuber
   ```
 - To get into a particular deployment terminal
   ```sh
-    kubectl exec -it <deployment-name> /bin/bash
+    kubectl exec -it <deployment-name> -- /bin/bash
   ```
 
 ### Pods & Services
