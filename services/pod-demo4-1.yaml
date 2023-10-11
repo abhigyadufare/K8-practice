@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busybox-demo
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: busybox
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo 'Busy loop'; done"]
+        resources:
+          requests:
+            cpu: 100m  # Specify the CPU resource request (e.g., 100 milliCPU)

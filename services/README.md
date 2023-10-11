@@ -1,13 +1,57 @@
-# Getting Started
+## Pod
 
-This repo consist most of the examples of services and deployments demo in Kubernetes.
+pod.yaml creates a pod in kubernetes
 
-## Prerequisites
+```sh
+   kubectl apply -f pod.yaml
+```
 
-- kubectl
-- minicube
+## Pod Demo2
 
-### Commands
+We added a container to a deployment image
+
+```sh
+   kubectl set image deployment/my-deployment my-container=nginx:1.21
+```
+
+## Pod Demo6
+
+To check whether it has been started on an external ip url, you need to start a minikube tunnel in a different terminal and keep it open
+
+```sh
+   minikube tunnel
+```
+
+and then run this in your working terminal to get the url
+
+```sh
+   minikube service <service-name> --url
+```
+
+or use this command if you're not in the default namespace
+
+```sh
+   minikube service <service-name> --url -n <namespace>
+```
+
+## Pod Demo7
+
+This was created for the load balancer exercise but we used external resource that is why it is empty. The commands the we used are listed below
+
+```sh
+  kubectl create deployment hello-minikube1 --image=kicbase/echo-server:1.0
+```
+
+```sh
+  kubectl get deployments
+  kubectl get pods
+```
+
+```sh
+  kubectl expose deployment hello-minikube1 --type=LoadBalancer --port=8080
+```
+
+## Commands
 
 - To apply a service or deployment file to your kubernetes.
   ```sh
@@ -69,11 +113,3 @@ This repo consist most of the examples of services and deployments demo in Kuber
   ```sh
     kubectl exec -it <deployment-name> /bin/bash
   ```
-
-### Pods & Services
-
-Folder /services consists of practice files that we practiced on 7th Oct 23.
-
-### Deployments
-
-Folder /deployments consists of handson we performed on 8th Oct 23.

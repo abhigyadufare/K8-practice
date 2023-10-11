@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-cronjob
+spec:
+  schedule: "*/1 * * * *" # Cron schedule to run every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-cronjob-container
+            image: busybox:latest # A minimal image for running shell commands
+            command: ["sh", "-c"]
+            args:
+            - date; echo 'Hello, Kubernetes!' >> /var/log/cron.log
+          restartPolicy: OnFailure

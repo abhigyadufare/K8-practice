@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-job
+spec:
+  parallelism: 1
+  completions: 1
+  template:
+    spec:
+      containers:
+      - name: python-container
+        image: my-python-job:latest  # Replace with the URL of your Docker image if using a registry

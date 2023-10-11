@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-demo
+spec:
+  containers:
+  - name: container1
+    image: nginx
+    volumeMounts:
+    - name: shared-data
+      mountPath: /data
+  - name: container2
+    image: busybox
+    command: ["/bin/sh", "-c", "echo 'Hello from container2' > /data/shared-file.txt; sleep 3600"]
+    volumeMounts:
+    - name: shared-data
+      mountPath: /data
+  volumes:
+  - name: shared-data
+    emptyDir: {}

@@ -1,0 +1,50 @@
+# Blue Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: blue
+  template:
+    metadata:
+      labels:
+        app: blue
+    spec:
+      containers:
+        - name: app-container
+          image: nginx:1.21
+---
+# Green Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: green
+  template:
+    metadata:
+      labels:
+        app: green
+    spec:
+      containers:
+        - name: app-container
+          image: nginx:latest
+---
+# Service to Switch Traffic (Blue by default)
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: blue  # Blue is active by default
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

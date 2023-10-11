@@ -1,0 +1,72 @@
+# Deployment for the canary release of NGINX
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-canary
+spec:
+  replicas: 3 # Number of replica pods for the canary release
+  selector:
+    matchLabels:
+      app: nginx
+      tier: canary
+  template:
+    metadata:
+      labels:
+        app: nginx
+        tier: canary
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.21 # New version of NGINX
+        ports:
+        - containerPort: 80
+
+---
+# Deployment for the stable release of NGINX
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-stable
+spec:
+  replicas: 3 # Number of replica pods for the canary release
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.20 # Stable version of NGINX
+        ports:
+        - containerPort: 80
+---
+# Service for the canary release
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-canary
+spec:
+  selector:
+    app: nginx
+    tier: canary
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+# Main Service for the stable release of NGINX
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
